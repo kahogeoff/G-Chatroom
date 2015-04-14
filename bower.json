@@ -1,7 +1,7 @@
 {
-  "name": "Chatroom_Test",
+  "name": "G-Chatroom",
   "version": "0.0.0",
-  "description": "A test",
+  "description": "G-Chatroom",
   "moduleType": [
     "node"
   ],
