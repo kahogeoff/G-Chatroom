@@ -1,18 +1,16 @@
 {
-  "name": "Chatroom_Test",
-  "version": "0.1.0",
-  "description": "Chatroom_Test",
-  "main": "main.js",
+  "name": "G-Chatroom",
+  "version": "0.0.0",
+  "description": "G-Chatroom",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified! Configure in package.json\" && exit 1"
+    "start": "node server.js"
   },
   "repository": "",
   "keywords": [
-    "node.js",
-    "eclipse",
-    "nodeclipse"
+    "node.js"
   ],
-  "author": "",
+  "author": "Geoffrey Cheung",
   "license": "MIT",
   "readmeFilename": "README.md",
   "dependencies": {

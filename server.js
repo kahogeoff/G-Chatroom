@@ -27,7 +27,7 @@ io.on('connection', function (socket) {
     io.emit('get online user',user_count);
     console.log('Online: '+ user_count);
 
-    mongo.connect("mongodb://localhost:27017/myweb", function (err, db) {
+    mongo.connect("mongodb://localhost:27017/gchatroom", function (err, db) {
         if (err != null) {
             console.log(err.name + ": " + err.message);
             return 1;
@@ -62,7 +62,7 @@ io.on('connection', function (socket) {
     socket.on('chat message', function (name, msg, color) {
         var msgd = new Date();
         var n = msgd.getTime();
-        mongo.connect("mongodb://localhost:27017/myweb", function (err, db) {
+        mongo.connect("mongodb://localhost:27017/gchatroom", function (err, db) {
             var collection = db.collection('chatroom');
             collection.insert({
                 "createdAt": new Date(),
