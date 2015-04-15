@@ -21,6 +21,8 @@ Create by Geoffrey Cheung 2015
 4. Improve the UI
 5. Add form validation 
 6. Add BBCode support
+7. Add error messages reminder
+8. Allow to read the previous messages (Now only last 10 messages when user login)
 
 ### Tools
 
