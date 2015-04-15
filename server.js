@@ -28,7 +28,6 @@ app.get('/', function (req, res) {
 
 //When client connected
 io.on('connection', function (socket) {
-    var clientIp = socket.request.connection.remoteAddress;
     var n = d.toDateString();
     var id = crc.crc32(clientIp + n).toString(16);
 
