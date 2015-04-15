@@ -20,6 +20,7 @@ Create by Geoffrey Cheung 2015
 3. Move the custom CSS to a CSS file
 4. Improve the UI
 5. Add form validation 
+6. Add BBCode support
 
 ### Tools
 
