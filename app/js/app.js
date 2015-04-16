@@ -1,6 +1,5 @@
 //Create by Geoffrey Cheung 2015
 
-var socket = io();
 var color = 'black';
 
 //$(".header").height($("#floating_area").height());
@@ -8,7 +7,7 @@ var color = 'black';
 //Initialize
 $(document).ready(function () {
   //$.material.init();
-  $("#messages_area").height($(window).height() - $('#input_area').height() - 16 - 50 -8);
+  $("#messages_area").height($(window).height() - $('#input_area').height() - 50);
   $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
 });
 
@@ -33,34 +32,33 @@ $('#clear').on('click', function () {
 
 //Show or hide the input area
 $('#hide').on('click', function () {
-  $("#input_area").toggle();
-  $(".footer").toggle();
-  if ($('#hide').text() === 'Hide') {
-    $('#hide').text('Show');
-    $("#messages_area").height($(window).height()-50);
-    $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
 
-  } else if ($('#hide').text() === 'Show') {
-    $('#hide').text('Hide');
-    $("#messages_area").height($(window).height() - $('#input_area').height() - 16 - 50 - 8);
-    $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
-  } 
+  $("#input_area").slideToggle("slow", function(){
+    if ($('#hide').text() === 'Hide') {
+      $('#hide').text('Show');
+      $("#messages_area").height($(window).height()-50);
+      $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
+
+    } else if ($('#hide').text() === 'Show') {
+      $('#hide').text('Hide');
+      $("#messages_area").height($(window).height() - $('#input_area').height() - 50);
+      $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
+    }
+  });
 });
 
-//Receiving messages
-socket.on('chat message', function (timestamp, name, msg, id, color) {
-  var d = new Date(timestamp);
-  var n = d.toString();
-  $('#messages').append($('<li>').text(n));
-  if (msg.indexOf("http://") === 0 || msg.indexOf("https://") === 0){
-    $('#messages').append($('<li>').append(name + ' (ID. ' + id + '): ').append('<a href="'+msg+'" target="_blank">'+msg+'</a>').css('color', color));
+
+$(window).on('resize', function(){
+  $("#messages_area").height($(window).height() - $('#input_area').height() - 50);
+});
+
+
+$('#messages').on('click', ".show-image-btn" , function () {
+  $(this).closest('div').find(".chat-image").toggle();
+  if($(this).text() === 'Show image')
+  {
+    $(this).text('Hide image');
   }else{
-  $('#messages').append($('<li>').append(name + ' (ID. ' + id + '): ' + msg).css('color', color));
+    $(this).text('Show image');
   }
-  $('#message').append($('<p>'));  
-  $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
-});
-
-socket.on('get online user',function (count){
-  $('#onlineuser').text('Online user: '+count); 
 });

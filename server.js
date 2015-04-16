@@ -9,11 +9,13 @@ var crc = require('crc');
 
 var server_port = process.env.PORT || 8080;
 
+//Set your database in here//
 var mongodb_host = process.env.MONGODB_ADDON_HOST || '127.0.0.1';
 var mongodb_port = process.env.MONGODB_ADDON_PORT || 27017;
-var mongodb_user = process.env.MONGODB_ADDON_USER || 'admin';
-var mongodb_pwd = process.env.MONGODB_ADDON_PASSWORD || 'admin';
-var mongodb_db = process.env.MONGODB_ADDON_DB || 'mydb';
+var mongodb_user = process.env.MONGODB_ADDON_USER || '';
+var mongodb_pwd = process.env.MONGODB_ADDON_PASSWORD || '';
+var mongodb_db = process.env.MONGODB_ADDON_DB || 'myweb';
+////////////////////////////
 
 var user_count = 0;
 
@@ -49,12 +51,12 @@ io.on('connection', function (socket) {
         collection.count(function (err, count) {
           if(count > 10)
           {
-            var stream = collection.find().skip(count - 10).stream();
+            var stream = collection.find().sort({"createdAt": 1}).skip(count - 10).stream();
             stream.on('data', function (data) {
                 io.to(socket.id).emit('chat message', data.timestamp, data.nickname, data.message, data.client_ID, data.color);
             });
           }else{
-            var stream = collection.find().stream();
+            var stream = collection.find().sort({"createdAt": 1}).stream();
             stream.on('data', function (data) {
                 io.to(socket.id).emit('chat message', data.timestamp, data.nickname, data.message, data.client_ID, data.color);
             });
@@ -105,7 +107,7 @@ http.listen(server_port, function () {
 });
 
 function getMongodbURI (mongodb_host, mongodb_port, mongodb_user, mongodb_pwd, mongodb_db) {
-    if(mongodb_user != null && mongodb_pwd != null) {
+    if(mongodb_user != '' && mongodb_pwd != '') {
         return "mongodb://"+mongodb_user+':'+mongodb_pwd+'@'+mongodb_host+':'+mongodb_port+'/'+mongodb_db;
     } else {
         return "mongodb://"+mongodb_host+':'+mongodb_port+'/'+mongodb_db;
