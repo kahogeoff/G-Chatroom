@@ -40,5 +40,7 @@ So don't use it if you care about security.
 ### Libraries
 
 ##License
+
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
+
 Read more on LICENSE.md
