@@ -36,3 +36,7 @@ Create by Geoffrey Cheung 2015
 8. Allow to read the previous messages (Now only last 10 messages when user login)
 
 ### Libraries
+
+##License
+[MIT License](http://en.wikipedia.org/wiki/MIT_License)
+Read more on LICENSE.md
