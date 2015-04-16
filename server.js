@@ -28,10 +28,12 @@ app.use('/css', express.static(__dirname + '/app/css'));
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/app/index.html');
     if(req.cookies.userID === undefined){
-        var randomID = generateID(16);
+        var randomID = generateID(8);
         res.cookie('userID', randomID, { maxAge: 86400000});
+        console.log('User get an ID: ' + req.cookies.userID);
+    }else{
+      userID = req.cookies.userID;
     }
-    userID = req.cookies.userID;
 });
 
 //When client connected
@@ -40,7 +42,8 @@ io.on('connection', function (socket) {
 
     var d = new Date();
     var n = d.toDateString();
-    var id = crc.crc32(userID + n).toString(16);
+    //var id = crc.crc32(userID + n).toString(16);
+    var id = userID;
 
     var mongodb_uri = getMongodbURI (mongodb_host, mongodb_port, mongodb_user, mongodb_pwd, mongodb_db);
 
