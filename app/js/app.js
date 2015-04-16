@@ -7,6 +7,7 @@ var color = 'black';
 
 //Initialize
 $(document).ready(function () {
+  //$.material.init();
   $("#messages_area").height($(window).height() - $('#input_area').height() - 16 - 50 -8);
   $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
 });
