@@ -6,7 +6,6 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongo = require('mongodb').MongoClient;
 var crc = require('crc');
-var cookieParser = require('cookie-parser');
 
 var server_port = process.env.PORT || 8080;
 
@@ -16,10 +15,8 @@ var mongodb_user = process.env.MONGODB_ADDON_USER || 'admin';
 var mongodb_pwd = process.env.MONGODB_ADDON_PASSWORD || 'admin';
 var mongodb_db = process.env.MONGODB_ADDON_DB || 'mydb';
 
+var d = new Date();
 var user_count = 0;
-var userID = '';
-
-app.use(cookieParser());
 
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 app.use('/js', express.static(__dirname + '/app/js'));
@@ -27,20 +24,13 @@ app.use('/css', express.static(__dirname + '/app/css'));
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/app/index.html');
-    if(req.cookies.userID === undefined){
-        var randomID = generateID(16);
-        res.cookie('userID', randomID, { maxAge: 86400000});
-    }
-    userID = req.cookies.userID;
 });
 
 //When client connected
 io.on('connection', function (socket) {
-    var clientIp = socket.request.connection.remoteAddress;
-
-    var d = new Date();
+    var clientIp = socket.conn.request.connection.remoteAddress;
     var n = d.toDateString();
-    var id = crc.crc32(userID + n).toString(16);
+    var id = crc.crc32(clientIp + n).toString(16);
 
     var mongodb_uri = getMongodbURI (mongodb_host, mongodb_port, mongodb_user, mongodb_pwd, mongodb_db);
 
@@ -110,7 +100,6 @@ io.on('connection', function (socket) {
     });
 });
 
-
 http.listen(server_port, function () {
     console.log('listening on *:' + server_port);
 });
@@ -121,14 +110,4 @@ function getMongodbURI (mongodb_host, mongodb_port, mongodb_user, mongodb_pwd, m
     } else {
         return "mongodb://"+mongodb_host+':'+mongodb_port+'/'+mongodb_db;
     }
-}
-
-function generateID(len){
-    var id = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for( var i=0; i < len; i++ )
-        id += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return id;
 }
