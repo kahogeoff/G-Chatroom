@@ -10,7 +10,9 @@ Create by Geoffrey Cheung 2015
 
 ## Usage
 
+This chatroom application HAS NO SECURITY OPTION TO PROTECT YET.
 
+So don't use it if you care about security.
 
 ## Developing
 
