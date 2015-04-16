@@ -28,9 +28,9 @@ Create by Geoffrey Cheung 2015
 ### Planning Feature
 1. Change the UI to [Material design](http://www.google.com/design/spec/material-design/introduction.html)
 2. Move some variable to a config file
-3. Move the custom CSS to a CSS file
+3. <del>Move the custom CSS to a CSS file</del> Done
 4. Improve the UI
-5. Add form validation
+5. <del>Add form validation</del> Done
 6. <del>Add BBCode support</del> Done
 7. Add error messages reminder
 8. Allow to read the previous messages (Now only last 10 messages when user login)

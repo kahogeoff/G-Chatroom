@@ -49,7 +49,11 @@ $('#hide').on('click', function () {
 
 
 $(window).on('resize', function(){
-  $("#messages_area").height($(window).height() - $('#input_area').height() - 50);
+  if ($('#hide').text() === 'Show') {
+    $("#messages_area").height($(window).height()-50);
+  } else if ($('#hide').text() === 'Hide') {
+    $("#messages_area").height($(window).height() - $('#input_area').height() - 50);
+  }
 });
 
 
