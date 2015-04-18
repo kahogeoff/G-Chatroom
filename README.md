@@ -2,7 +2,7 @@
 
 # G-Chatroom
 
-A simple node.js chatroom with MongoDB.
+A simple anonymous chatroom written in Javascript, using Node.js with MongoDB.
 
 You can see the demo in [here](http://gchatroom.cleverapps.io/)
 
