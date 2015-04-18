@@ -33,7 +33,7 @@ So don't use it if you care about security.
 3. <del>Move the custom CSS to a CSS file</del> Done
 4. Improve the UI
 5. <del>Add form validation</del> Done
-6. <del>Add BBCode support</del> Done
+6. <del>Add BBCode support</del> Support more BBCode
 7. Add error messages reminder
 8. Allow to read the previous messages (Now only last 10 messages when user login)
 
