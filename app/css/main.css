@@ -36,6 +36,10 @@ body {
     display: none;
 }
 
+.chat-image-area {
+  margin-bottom: 2px;
+}
+
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
