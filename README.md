@@ -36,6 +36,7 @@ So don't use it if you care about security.
 6. <del>Add BBCode support</del> Support more BBCode
 7. Add error messages reminder
 8. Allow to read the previous messages (Now only last 10 messages when user login)
+9. Administration system and tools (e.g. Domain blocking, text filter, password protect, message delete, etc.)
 
 ### Libraries
 
