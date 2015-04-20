@@ -2,8 +2,6 @@
 
 var color = 'black';
 
-//$(".header").height($("#floating_area").height());
-
 //Initialize
 $(document).ready(function () {
   //$.material.init();
@@ -58,7 +56,7 @@ $(window).on('resize', function(){
 
 
 $('#messages').on('click', ".show-image-btn" , function () {
-  $(this).closest('div').find(".chat-image").toggle();
+  $(this).parents('div').children('div').find(".chat-image").toggle();
   if($(this).text() === 'Show image')
   {
     $(this).text('Hide image');

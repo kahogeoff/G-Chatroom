@@ -7,7 +7,10 @@ var io = require('socket.io')(http);
 var mongo = require('mongodb').MongoClient;
 var crc = require('crc');
 
+//Set your sever info in here//
+var server_ip = process.env.IP || process.env.INADDR_ANY;
 var server_port = process.env.PORT || 8080;
+//////////////////////////////
 
 //Set your database in here//
 var mongodb_host = process.env.MONGODB_ADDON_HOST || '127.0.0.1';
@@ -102,8 +105,8 @@ io.on('connection', function (socket) {
     });
 });
 
-http.listen(server_port, function () {
-    console.log('listening on *:' + server_port);
+http.listen(server_port, server_ip, function () {
+    console.log('listening on ' + server_ip + ':' + server_port);
 });
 
 function getMongodbURI (mongodb_host, mongodb_port, mongodb_user, mongodb_pwd, mongodb_db) {

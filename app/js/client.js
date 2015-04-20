@@ -32,7 +32,7 @@ function bbcode_parser(str) {
   // The matching array of strings to replace matches with
   format_replace = [
       '<a href="$1" target="_blank">$1</a>',
-      '<button class="btn btn-default show-image-btn">Show image</button> <div class="row"><div class="chat-image col-xs-6 col-md-3"><a href="$1" target="_blank" class="thumbnail"><img src="$1"/></a></div></div>',
+      '<div><button class="btn btn-default show-image-btn">Show image</button> <div class="row"><div class="chat-image col-xs-6 col-md-3"><a href="$1" target="_blank" class="thumbnail"><img src="$1"/></a></div></div></div>',
       '<span style="text-decoration: underline;">$1</span>'
   ];
 
