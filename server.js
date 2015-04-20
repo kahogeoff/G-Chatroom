@@ -49,7 +49,7 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
     var clientIp = socket.conn.request.connection.remoteAddress;
 
-    var id_str = socket.request.headers.cookie.split("; ")[1];
+    var id_str = socket.request.headers.cookie;
     var id = id_str.substr(id_str.indexOf('userID=')+7,id_str.indexOf('userID=')+15);
 
     var mongodb_uri = getMongodbURI (mongodb_host, mongodb_port, mongodb_user, mongodb_pwd, mongodb_db);
