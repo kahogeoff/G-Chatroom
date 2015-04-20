@@ -31,8 +31,6 @@ app.use('/css', express.static(__dirname + '/app/css'));
 
 app.use(cookieParser());
 
-app.enable('trust proxy');
-
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/app/index.html');
 
