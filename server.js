@@ -1,27 +1,21 @@
 //Create by Geoffrey Cheung 2015
 
+//Server libraries
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongo = require('mongodb').MongoClient;
 var cookieParser = require('cookie-parser');
+
+//Utility libraries
 var Hashids = require("hashids");
 
-//Set your sever info in here//
-var server_ip = process.env.IP || process.env.INADDR_ANY;
-var server_port = process.env.PORT || 8080;
-//////////////////////////////
-
-//Set your database in here//
-var mongodb_host = process.env.MONGODB_ADDON_HOST || '127.0.0.1';
-var mongodb_port = process.env.MONGODB_ADDON_PORT || 27017;
-var mongodb_user = process.env.MONGODB_ADDON_USER || '';
-var mongodb_pwd = process.env.MONGODB_ADDON_PASSWORD || '';
-var mongodb_db = process.env.MONGODB_ADDON_DB || 'myweb';
-////////////////////////////
+//Config file
+var server_config = require('./config/server_config.js')
 
 var user_count = 0;
+var max_message_num = 10;
 var id_ttl_day = 1;
 var d = new Date();
 
@@ -47,12 +41,12 @@ app.get('/', function (req, res) {
 
 //When client connected
 io.on('connection', function (socket) {
-    var clientIp = socket.conn.request.connection.remoteAddress;
+    var clientIp = socket.request.connection.remoteAddress;
 
     var id_str = socket.request.headers.cookie;
     var id = id_str.substr(id_str.indexOf('userID=')+7,id_str.indexOf('userID=')+15);
 
-    var mongodb_uri = getMongodbURI (mongodb_host, mongodb_port, mongodb_user, mongodb_pwd, mongodb_db);
+    var mongodb_uri = server_config.getMongodbURI ();
 
     console.log('User from:' + clientIp + ' connected.');
     user_count+=1;
@@ -67,9 +61,9 @@ io.on('connection', function (socket) {
         }
         var collection = db.collection('chatroom');
         collection.count(function (err, count) {
-          if(count > 10)
+          if(count > max_message_num)
           {
-            var stream = collection.find().sort({"createdAt": 1}).skip(count - 10).stream();
+            var stream = collection.find().sort({"createdAt": 1}).skip(count - max_message_num).stream();
             stream.on('data', function (data) {
                 io.to(socket.id).emit('chat message', data.timestamp, data.nickname, data.message, data.client_ID, data.color);
             });
@@ -120,14 +114,6 @@ io.on('connection', function (socket) {
     });
 });
 
-http.listen(server_port, server_ip, function () {
-    console.log('listening on ' + server_ip + ':' + server_port);
+http.listen(server_config.port, server_config.ip, function () {
+    console.log('listening on ' + server_config.ip + ':' + server_config.port);
 });
-
-function getMongodbURI (mongodb_host, mongodb_port, mongodb_user, mongodb_pwd, mongodb_db) {
-    if(mongodb_user != '' && mongodb_pwd != '') {
-        return "mongodb://"+mongodb_user+':'+mongodb_pwd+'@'+mongodb_host+':'+mongodb_port+'/'+mongodb_db;
-    } else {
-        return "mongodb://"+mongodb_host+':'+mongodb_port+'/'+mongodb_db;
-    }
-}

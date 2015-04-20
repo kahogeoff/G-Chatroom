@@ -45,7 +45,7 @@ $('#hide').on('click', function () {
   });
 });
 
-
+//On window resize
 $(window).on('resize', function(){
   if ($('#hide').text() === 'Show') {
     $("#messages_area").height($(window).height()-50);
@@ -54,7 +54,7 @@ $(window).on('resize', function(){
   }
 });
 
-
+//When display image button clicked
 $('#messages').on('click', ".show-image-btn" , function () {
   $(this).parents('div').children('div').find(".chat-image").toggle();
   if($(this).text() === 'Show image')
