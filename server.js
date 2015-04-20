@@ -35,13 +35,14 @@ app.enable('trust proxy');
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/app/index.html');
-    var cookie = req.cookies.userID;
-    var conn_d = new Date();
-    hashids = new Hashids(conn_d.getTime(),8);
-    var id = hashids.encode(Math.floor(Math.random() * (10)) + 1);
 
+    var cookie = req.cookies.userID;
     if (cookie === undefined)
     {
+      var conn_d = new Date();
+      hashids = new Hashids(conn_d.getTime(),8);
+      var id = hashids.encode(Math.floor(Math.random() * (10)) + 1);
+
       res.cookie('userID',id,{maxAge:3600000 * 24 * id_ttl_day});
     }
 });
