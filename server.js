@@ -5,7 +5,8 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongo = require('mongodb').MongoClient;
-var crc = require('crc');
+var cookieParser = require('cookie-parser');
+var Hashids = require("hashids");
 
 //Set your sever info in here//
 var server_ip = process.env.IP || process.env.INADDR_ANY;
@@ -21,21 +22,36 @@ var mongodb_db = process.env.MONGODB_ADDON_DB || 'myweb';
 ////////////////////////////
 
 var user_count = 0;
+var id_ttl_day = 1;
+var d = new Date();
 
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 app.use('/js', express.static(__dirname + '/app/js'));
 app.use('/css', express.static(__dirname + '/app/css'));
 
+app.use(cookieParser());
+
+app.enable('trust proxy');
+
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/app/index.html');
+    var cookie = req.cookies.userID;
+    var conn_d = new Date();
+    hashids = new Hashids(conn_d.getTime(),8);
+    var id = hashids.encode(Math.floor(Math.random() * (10)) + 1);
+
+    if (cookie === undefined)
+    {
+      res.cookie('userID',id,{maxAge:3600000 * 24 * id_ttl_day});
+    }
 });
 
 //When client connected
 io.on('connection', function (socket) {
     var clientIp = socket.conn.request.connection.remoteAddress;
-    var d = new Date();
-    var n = d.toDateString();
-    var id = crc.crc32(clientIp + n).toString(16);
+
+    var id_str = socket.request.headers.cookie.split("; ")[1];
+    var id = id_str.substr(id_str.indexOf('=')+1);
 
     var mongodb_uri = getMongodbURI (mongodb_host, mongodb_port, mongodb_user, mongodb_pwd, mongodb_db);
 
