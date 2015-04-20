@@ -10,6 +10,8 @@ You can see the lastest demo in [here](http://gchatroom.cleverapps.io/)
 
 or the stable demo in [here](http://gchatroom-geoff4321.rhcloud.com/)
 
+Create by Geoffrey Cheung 2015
+
 ## Usage
 
 This chatroom application HAS NO SECURITY OPTION TO PROTECT YET.
