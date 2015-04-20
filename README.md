@@ -4,6 +4,8 @@
 
 A simple anonymous chatroom written in Javascript, using Node.js with MongoDB.
 
+![Srceen Shot](http://i.imgur.com/z763Abx.png)
+
 You can see the demo in [here](http://gchatroom.cleverapps.io/)
 
 Create by Geoffrey Cheung 2015
