@@ -18,6 +18,22 @@ This chatroom application HAS NO SECURITY OPTION TO PROTECT YET.
 
 So don't use it if you care about security.
 
+#### How to setup 
+
+Since I haven't write any automatic DB creation script, you must set up your DB by yourself.
+
+    1. Create a MongoDB collection call 'chatroom' in your target database
+    2. Put all files of this application in your target file
+    3. Config the server by editing the 'server_config.js' under the 'config' folder
+    4. Start this application by entering 'node server.js' at the root of this
+    5. Done
+
+Note that you don't need to process Step 4, if you are using hosting server (e.g. OpenShift, CleverCloud, etc.)
+
+##### Message TTL option
+
+You can set Message TTL by creating a [TTL index](http://docs.mongodb.org/manual/tutorial/expire-data/) call 'createAt'
+
 ## Developing
 
 2015-4-16: Version alpha-1 released.
@@ -29,7 +45,7 @@ So don't use it if you care about security.
 2015-4-14: Version alpha-0 released.
 
 ###Known Bug
-1. ID system is not working when you run this on hosting service (e.g. CleverCloud)
+1. <del> ID system is not working when you run this on hosting service (e.g. CleverCloud) </del> Fixed
 
 ### Planning Feature
 1. Change the UI to [Material design](http://www.google.com/design/spec/material-design/introduction.html)
@@ -41,11 +57,14 @@ So don't use it if you care about security.
 7. Add error messages reminder
 8. Allow to read the previous messages (Now only last 10 messages when user login)
 9. Administration system and tools (e.g. Domain blocking, text filter, password protect, message delete, etc.)
+10. Automatic DB setup script
 
 ### Libraries
+
+Please read the `package.json` and `bower.json`
 
 ##License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
 
-Read more on LICENSE.md
+Learn more on `LICENSE.md`
