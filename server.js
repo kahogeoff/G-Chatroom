@@ -80,7 +80,7 @@ io.on('connection', function (socket) {
                         io.to(socket.id).emit('chat message', 
                             data.timestamp, 
                             data.nickname, 
-                            security_config.using_aes_to_store ? aes.decrypt(data.message):data.message, 
+                            data.encrypted ? aes.decrypt(data.message):data.message, 
                             data.client_ID, 
                             data.color);
                     });
@@ -90,7 +90,7 @@ io.on('connection', function (socket) {
                         io.to(socket.id).emit('chat message', 
                             data.timestamp, 
                             data.nickname, 
-                            security_config.using_aes_to_store ? aes.decrypt(data.message):data.message, 
+                            data.encrypted ? aes.decrypt(data.message):data.message, 
                             data.client_ID, 
                             data.color);
                     });
@@ -127,7 +127,8 @@ io.on('connection', function (socket) {
                     "nickname": name,
                     "message": security_config.using_aes_to_store? aes.encrypt(msg) :msg,
                     "client_ID": id,
-                    "color": color
+                    "color": color,
+                    "encrypted": security_config.using_aes_to_store? 1:0,
                 }, function (err, o) {
                     if (err) {
                         console.warn(err.name + ": " + err.message);
