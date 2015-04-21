@@ -11,14 +11,14 @@ module.exports = {
   db_port : process.env.MONGODB_ADDON_PORT || 27017,
   db_user : process.env.MONGODB_ADDON_USER || '',
   db_pwd : process.env.MONGODB_ADDON_PASSWORD || '',
-  db_db : process.env.MONGODB_ADDON_DB || 'myweb',
+  db_name : process.env.MONGODB_ADDON_DB || 'myweb',
   ////////////////////////////
 
   getMongodbURI: function () {
       if(this.db_user != '' && this.db_pwd != '') {
-          return "mongodb://"+this.db_user+':'+this.db_pwd+'@'+this.db_host+':'+this.db_port+'/'+this.db_db;
+          return "mongodb://"+this.db_user+':'+this.db_pwd+'@'+this.db_host+':'+this.db_port+'/'+this.db_name;
       } else {
-          return "mongodb://"+this.db_host+':'+this.db_port+'/'+this.db_db;
+          return "mongodb://"+this.db_host+':'+this.db_port+'/'+this.db_name;
       }
   }
 };

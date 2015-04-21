@@ -4,6 +4,10 @@ var socket = io();
 Encoder.EncodeType = "entity";
 
 //Receiving messages
+socket.on('reconnect', function(){
+  $("#messages").empty();
+});
+
 socket.on('chat message', function (timestamp, name, msg, id, color) {
   var d = new Date(timestamp);
   var n = d.toString();

@@ -7,16 +7,21 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongo = require('mongodb').MongoClient;
 var cookieParser = require('cookie-parser');
+var fs = require('fs');
 
 //Utility libraries
 var Hashids = require("hashids");
+var aes = require("./util/aes.js");
 
 //Config file
-var server_config = require('./config/server_config.js')
+var server_config = require('./config/server_config.js');
+var basic_config = JSON.parse(fs.readFileSync('./config/basic_config.json', 'utf8'));
+var security_config = JSON.parse(fs.readFileSync('./config/security_config.json', 'utf8'));
 
 var user_count = 0;
-var max_message_num = 10;
-var id_ttl_day = 1;
+var max_message_num = basic_config.max_message_num;
+var id_ttl_day = basic_config.id_ttl_day;
+var msg_ttl_day = basic_config.msg_ttl_day;
 var d = new Date();
 
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
@@ -32,8 +37,8 @@ app.get('/', function (req, res) {
     if (cookie === undefined)
     {
       var conn_d = new Date();
-      hashids = new Hashids(conn_d.getTime(),8);
-      var id = hashids.encode(Math.floor(Math.random() * (10)) + 1);
+      hashids = new Hashids(conn_d.toString());
+      var id = hashids.encode(Math.floor(Math.random() * (10)) + 1,Math.floor(Math.random() * (10)) + 1,Math.floor(Math.random() * (10)) + 1,Math.floor(Math.random() * (10)) + 1);
 
       res.cookie('userID',id,{maxAge:3600000 * 24 * id_ttl_day});
     }
@@ -57,23 +62,41 @@ io.on('connection', function (socket) {
     mongo.connect(mongodb_uri, function (err, db) {
         if (err != null) {
             console.log(err.name + ": " + err.message);
-            return 1;
+        }else{
+
+            if (db.system.namespaces.find( { name: server_config.db_name+'.chatroom' }) === undefined)
+            {
+                db.createCollection('chatroom');
+                db.collection.createIndex( { "createdAt": 1 }, { expireAfterSeconds: 3600 * 24 * msg_ttl_day} );
+            }
+
+            var collection = db.collection('chatroom');
+            collection.count(function (err, count) {
+                if(count > max_message_num)
+                {
+                    var stream = collection.find().sort({"createdAt": 1}).skip(count - max_message_num).stream();
+                    stream.on('data', function (data) {
+                        io.to(socket.id).emit('chat message', 
+                            data.timestamp, 
+                            data.nickname, 
+                            security_config.using_aes_to_store ? aes.decrypt(data.message):data.message, 
+                            data.client_ID, 
+                            data.color);
+                    });
+                }else{
+                    var stream = collection.find().sort({"createdAt": 1}).stream();
+                    stream.on('data', function (data) {
+                        io.to(socket.id).emit('chat message', 
+                            data.timestamp, 
+                            data.nickname, 
+                            security_config.using_aes_to_store ? aes.decrypt(data.message):data.message, 
+                            data.client_ID, 
+                            data.color);
+                    });
+                }
+            });
+
         }
-        var collection = db.collection('chatroom');
-        collection.count(function (err, count) {
-          if(count > max_message_num)
-          {
-            var stream = collection.find().sort({"createdAt": 1}).skip(count - max_message_num).stream();
-            stream.on('data', function (data) {
-                io.to(socket.id).emit('chat message', data.timestamp, data.nickname, data.message, data.client_ID, data.color);
-            });
-          }else{
-            var stream = collection.find().sort({"createdAt": 1}).stream();
-            stream.on('data', function (data) {
-                io.to(socket.id).emit('chat message', data.timestamp, data.nickname, data.message, data.client_ID, data.color);
-            });
-          }
-        });
     });
 
     //When client disconnected
@@ -92,25 +115,30 @@ io.on('connection', function (socket) {
         var msgd = new Date();
         var n = msgd.getTime();
         mongo.connect(mongodb_uri, function (err, db) {
-            var collection = db.collection('chatroom');
-            collection.insert({
-                "createdAt": new Date(),
-                "timestamp": n,
-                "nickname": name,
-                "message": msg,
-                "client_ID": id,
-                "color": color
-            }, function (err, o) {
-                if (err) {
-                    console.warn(err.message);
-                } else {
-                    console.log(d.toString() + '\nChat message form [' + clientIp + '] name [' + name + '] say [' + msg + ']');
-                }
-            });
+            if (err) {
+                console.warn(err.name + ": " + err.message);
+            }else{
 
+                var collection = db.collection('chatroom');
+                collection.insert({
+                    "createdAt": new Date(),
+                    "timestamp": n,
+                    "nickname": name,
+                    "message": security_config.using_aes_to_store? aes.encrypt(msg) :msg,
+                    "client_ID": id,
+                    "color": color
+                }, function (err, o) {
+                    if (err) {
+                        console.warn(err.name + ": " + err.message);
+                    } else {
+                        console.log(d.toString() + '\nChat message form [' + clientIp + '] name [' + name + '] say [' + msg + ']');
+                    }
+                });
+
+            }
         });
 
-        io.emit('chat message', n, name, msg, id, color);
+        io.emit('chat message', n, name, security_config.using_aes_to_store? aes.encrypt(msg) :msg, id, color);
     });
 });
 

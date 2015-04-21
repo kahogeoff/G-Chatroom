@@ -1,0 +1,5 @@
+{
+	"max_message_num": 10,
+	"id_ttl_day": 1,
+	"msg_ttl_day": 1
+}

@@ -64,3 +64,7 @@ $('#messages').on('click', ".show-image-btn" , function () {
     $(this).text('Show image');
   }
 });
+
+$('.nav-collapse').click('li', function() {
+    $('.nav-collapse').collapse('hide');
+});
