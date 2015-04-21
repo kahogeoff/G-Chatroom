@@ -140,7 +140,7 @@ io.on('connection', function (socket) {
             }
         });
 
-        io.emit('chat message', n, name, msg, id, color);
+        io.emit('chat message', n, name, security_config.using_aes_to_store? aes.encrypt(msg):msg, id, color);
     });
 });
 
