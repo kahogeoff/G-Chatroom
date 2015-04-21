@@ -49,7 +49,7 @@ You can set Message TTL by creating a [TTL index](http://docs.mongodb.org/manual
 
 ### Planning Feature
 1. Change the UI to [Material design](http://www.google.com/design/spec/material-design/introduction.html)
-2. Move some variable to a config file
+2. <del>Move some variable to a config file</del> Done
 3. <del>Move the custom CSS to a CSS file</del> Done
 4. Improve the UI
 5. <del>Add form validation</del> Done
