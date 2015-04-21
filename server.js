@@ -7,6 +7,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongo = require('mongodb').MongoClient;
 var cookieParser = require('cookie-parser');
+var cookie = require('cookie');
 var fs = require('fs');
 
 //Utility libraries
@@ -48,8 +49,7 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
     var clientIp = socket.request.connection.remoteAddress;
 
-    var id_str = socket.request.headers.cookie;
-    var id = id_str.substr(id_str.indexOf('userID=')+7,id_str.indexOf('userID=')+15);
+    var id = cookie.parse(socket.request.headers.cookie).userID;
 
     var mongodb_uri = server_config.getMongodbURI ();
 
