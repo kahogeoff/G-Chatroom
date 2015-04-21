@@ -64,7 +64,7 @@ io.on('connection', function (socket) {
             console.log(err.name + ": " + err.message);
         }else{
 
-            if (db.system.namespaces.find( { name: server_config.db_name+'.chatroom' }) === undefined)
+            if (db.system.namespace.find( { name: server_config.db_name+'.chatroom' }) === undefined)
             {
                 db.createCollection('chatroom');
                 db.collection.createIndex( { "createdAt": 1 }, { expireAfterSeconds: 3600 * 24 * msg_ttl_day} );
