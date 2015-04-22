@@ -10,12 +10,8 @@ body {
     padding: 0;
 }
 
-#messages li {
-    padding: 5px 10px;
-}
-
-#messages li {
-    background: #EEEEEE;
+#messages {
+    padding: 10px 10px;
 }
 
 #input_area {

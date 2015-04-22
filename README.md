@@ -36,6 +36,16 @@ You can set Message TTL by creating a [TTL index](http://docs.mongodb.org/manual
 
 ## Developing
 
+2015-4-22: Version alpha-2 released.
+* Changed the UI to [Material design](http://www.google.com/design/spec/material-design/introduction.html) style
+* Message can be stored in AES encrypted text (Storage only, not the encryption on transfer)
+* Fixed the ID system (Using cookie)
+* Add DB initializing script (UNTESTED)
+* Add the config files
+* Add the compressed client side scripts
+* Improved the UI
+* Other bugs fix
+
 2015-4-16: Version alpha-1 released.
 * Support 2 BBCode tags, [url][/url] and [img][/img]
 * Add 3rd party HTML entity encoder from [Here](http://www.strictly-software.com/htmlencode)
@@ -48,7 +58,7 @@ You can set Message TTL by creating a [TTL index](http://docs.mongodb.org/manual
 1. <del> ID system is not working when you run this on hosting service (e.g. CleverCloud) </del> Fixed
 
 ### Planning Feature
-1. Change the UI to [Material design](http://www.google.com/design/spec/material-design/introduction.html)
+1. <del>Change the UI to [Material design](http://www.google.com/design/spec/material-design/introduction.html)</del> Done
 2. <del>Move some variable to a config file</del> Done
 3. <del>Move the custom CSS to a CSS file</del> Done
 4. Improve the UI
