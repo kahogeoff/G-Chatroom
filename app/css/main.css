@@ -21,7 +21,7 @@ body {
 #input_area {
     position: fixed;
     bottom: 0px;
-    width: 100;
+    min-width: 100%;
     margin-bottom: 0px;
     height: auto;
     float: none;

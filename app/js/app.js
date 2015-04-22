@@ -4,8 +4,9 @@ var color = 'black';
 
 //Initialize
 $(document).ready(function () {
-  //$.material.init();
-  $("#messages_area").height($(window).height() - $('#input_area').height() - 50);
+  $.material.init();
+  $("body").css("padding-top",$(".navbar").height());
+  $("#messages_area").height($(window).height() - $('#input_area').height() - $(".navbar").height());
   $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
 });
 
@@ -34,12 +35,12 @@ $('#hide').on('click', function () {
   $("#input_area").slideToggle("slow", function(){
     if ($('#hide').text() === 'Hide') {
       $('#hide').text('Show');
-      $("#messages_area").height($(window).height()-50);
+      $("#messages_area").height($(window).height()-$(".navbar").height());
       $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
 
     } else if ($('#hide').text() === 'Show') {
       $('#hide').text('Hide');
-      $("#messages_area").height($(window).height() - $('#input_area').height() - 50);
+      $("#messages_area").height($(window).height() - $('#input_area').height() - $(".navbar").height());
       $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
     }
   });
@@ -47,10 +48,11 @@ $('#hide').on('click', function () {
 
 //On window resize
 $(window).on('resize', function(){
+  $("body").css("padding-top",$(".navbar").height());
   if ($('#hide').text() === 'Show') {
-    $("#messages_area").height($(window).height()-50);
+    $("#messages_area").height($(window).height()-$(".navbar").height());
   } else if ($('#hide').text() === 'Hide') {
-    $("#messages_area").height($(window).height() - $('#input_area').height() - 50);
+    $("#messages_area").height($(window).height() - $('#input_area').height() - $(".navbar").height());
   }
 });
 

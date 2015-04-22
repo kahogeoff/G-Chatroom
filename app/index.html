@@ -8,19 +8,23 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
       <link href="/css/main.css" rel="stylesheet">
       <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link href="/bower_components/bootstrap-material-design/dist/css/material.min.css" rel="stylesheet">
+      <link href="/bower_components/bootstrap-material-design/dist/css/material-fullpalette.min.css" rel="stylesheet">
+      <link href="/bower_components/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
+
    </head>
    <body>
-      <nav class="navbar navbar-default navbar-fixed-top container-fluid">
+      <nav class="navbar navbar-default navbar-fixed-top container-fluid shadow-z-1 navbar-material-grey-100">
          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
+        </button>
             </button>
             <a class="navbar-brand" href="#">G-Chatroom</a>
          </div>
-         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <div class="collapse navbar-collapse navbar-responsive-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav nav-pills navbar-right">
                <li class="dropdown">
                 <a class="dropdown-toggle" type="button" id="colorMenu" data-toggle="dropdown" aria-expanded="true" role='button'>
@@ -58,7 +62,7 @@
          <ul id="messages"></ul>
          <p></p>
       </div>
-      <div id="input_area" class="panel panel-default">
+      <div id="input_area" class="panel panel-default shadow-z-1">
       <div class="panel-body container-fluid noselect">
          <p>
             <strong id="onlineuser">Online user:</strong>
@@ -86,6 +90,8 @@
       <script src="/bower_components/jquery/dist/jquery.min.js"></script>
       <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" /></script>
       <script src="/bower_components/bootstrap-validator/dist/validator.min.js" /></script>
+      <script src="/bower_components/bootstrap-material-design/dist/js/material.min.js" /></script>
+      <script src="/bower_components/bootstrap-material-design/dist/js/ripples.min.js" /></script>
 
       <script src="js/3rd/encoder.js"></script>
       <script src="js/util/bbcode.js"></script>
