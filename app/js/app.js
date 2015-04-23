@@ -7,6 +7,7 @@ var height = 0;
 $(document).ready(function () {
   $.material.init();
   height = $(".navbar").height();
+  $(".navbar-collapse").collapse('hide');
   $("body").css("padding-top",$(".navbar").height());
   $("#messages_area").height($(window).height() - $('#input_area').height() - height);
   $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
@@ -69,8 +70,9 @@ $('#messages').on('click', ".show-image-btn" , function () {
 });
 
 $('.nav a').on('click',function() {
+    console.log($(".navbar-collapse").collapse());
     if($(this).attr('class') == 'nav-opt')
     {
-      $(".navbar-toggle").click();
+      $(".navbar-collapse").collapse('hide');
     }
 });
