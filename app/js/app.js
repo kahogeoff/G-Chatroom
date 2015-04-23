@@ -1,12 +1,14 @@
 //Create by Geoffrey Cheung 2015
 
 var color = 'black';
+var height = 0;
 
 //Initialize
 $(document).ready(function () {
   $.material.init();
+  height = $(".navbar").height();
   $("body").css("padding-top",$(".navbar").height());
-  $("#messages_area").height($(window).height() - $('#input_area').height() - $(".navbar").height());
+  $("#messages_area").height($(window).height() - $('#input_area').height() - height);
   $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
 });
 
@@ -35,12 +37,12 @@ $('#hide').on('click', function () {
   $("#input_area").slideToggle("slow", function(){
     if ($('#hide').text() === 'Hide') {
       $('#hide').text('Show');
-      $("#messages_area").height($(window).height()-$(".navbar").height());
-      $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
+      $("#messages_area").height($(window).height()-height);
+      $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + height}, 1000);
 
     } else if ($('#hide').text() === 'Show') {
       $('#hide').text('Hide');
-      $("#messages_area").height($(window).height() - $('#input_area').height() - $(".navbar").height());
+      $("#messages_area").height($(window).height() - $('#input_area').height() - height);
       $("#messages_area").animate({ scrollTop: $("#messages_area")[0].scrollHeight + $(window).height()}, 1000);
     }
   });
@@ -48,11 +50,10 @@ $('#hide').on('click', function () {
 
 //On window resize
 $(window).on('resize', function(){
-  $("body").css("padding-top",$(".navbar").height());
   if ($('#hide').text() === 'Show') {
-    $("#messages_area").height($(window).height()-$(".navbar").height());
+    $("#messages_area").height($(window).height()-height);
   } else if ($('#hide').text() === 'Hide') {
-    $("#messages_area").height($(window).height() - $('#input_area').height() - $(".navbar").height());
+    $("#messages_area").height($(window).height() - $('#input_area').height() - height);
   }
 });
 
@@ -67,6 +68,9 @@ $('#messages').on('click', ".show-image-btn" , function () {
   }
 });
 
-$('.nav-collapse').click('li', function() {
-    $('.nav-collapse').collapse('hide');
+$('.nav a').on('click',function() {
+    if($(this).attr('class') == 'nav-opt')
+    {
+      $(".navbar-toggle").click();
+    }
 });
