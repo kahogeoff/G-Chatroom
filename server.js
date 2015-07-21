@@ -101,7 +101,6 @@ io.on('connection', function (socket) {
             socket.on('chat message', function (name, msg, color) {
                 var msgd = new Date();
                 var n = msgd.getTime();
-                var collection = db.collection('chatroom');
                 collection.insert({
                     "createdAt": new Date(),
                     "timestamp": n,
