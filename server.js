@@ -62,6 +62,7 @@ io.on('connection', function (socket) {
     mongo.connect(mongodb_uri, function (err, db) {
         if (err != null) {
             console.log(err.name + ": " + err.message);
+            io.emit('error', err.name + ": " + err.message);
         }else{
 
             if (db.collection('chatroom').find() === undefined)
@@ -77,21 +78,21 @@ io.on('connection', function (socket) {
                 {
                     var stream = collection.find().sort({"createdAt": 1}).skip(count - max_message_num).stream();
                     stream.on('data', function (data) {
-                        io.to(socket.id).emit('chat message', 
-                            data.timestamp, 
-                            data.nickname, 
-                            data.encrypted ? aes.decrypt(data.message):data.message, 
-                            data.client_ID, 
+                        io.to(socket.id).emit('chat message',
+                            data.timestamp,
+                            data.nickname,
+                            data.encrypted ? aes.decrypt(data.message):data.message,
+                            data.client_ID,
                             data.color);
                     });
                 }else{
                     var stream = collection.find().sort({"createdAt": 1}).stream();
                     stream.on('data', function (data) {
-                        io.to(socket.id).emit('chat message', 
-                            data.timestamp, 
-                            data.nickname, 
-                            data.encrypted ? aes.decrypt(data.message):data.message, 
-                            data.client_ID, 
+                        io.to(socket.id).emit('chat message',
+                            data.timestamp,
+                            data.nickname,
+                            data.encrypted ? aes.decrypt(data.message):data.message,
+                            data.client_ID,
                             data.color);
                     });
                 }
