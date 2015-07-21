@@ -98,29 +98,9 @@ io.on('connection', function (socket) {
                 }
             });
 
-        }
-    });
-
-    //When client disconnected
-    socket.on('disconnect', function () {
-        console.log('User from:' + clientIp + ' disconnected');
-        user_count-=1;
-        if(user_count > 0)
-        {
-            io.emit('get online user',user_count);
-            console.log('Online: '+ user_count);
-        }
-    });
-
-    //When messages recivied
-    socket.on('chat message', function (name, msg, color) {
-        var msgd = new Date();
-        var n = msgd.getTime();
-        mongo.connect(mongodb_uri, function (err, db) {
-            if (err) {
-                console.warn(err.name + ": " + err.message);
-            }else{
-
+            socket.on('chat message', function (name, msg, color) {
+                var msgd = new Date();
+                var n = msgd.getTime();
                 var collection = db.collection('chatroom');
                 collection.insert({
                     "createdAt": new Date(),
@@ -138,11 +118,24 @@ io.on('connection', function (socket) {
                     }
                 });
 
-            }
-        });
-
-        io.emit('chat message', n, name, msg, id, color);
+                io.emit('chat message', n, name, msg, id, color);
+            });
+        }
     });
+
+    //When client disconnected
+    socket.on('disconnect', function () {
+        console.log('User from:' + clientIp + ' disconnected');
+        user_count-=1;
+        if(user_count > 0)
+        {
+            io.emit('get online user',user_count);
+            console.log('Online: '+ user_count);
+        }
+    });
+
+    //When messages recivied
+
 });
 
 http.listen(server_config.port, server_config.ip, function () {
