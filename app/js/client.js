@@ -24,7 +24,7 @@ socket.on('get online user', function(count) {
 });
 
 socket.on('error', function(error_msg) {
-  $('nav').append(
+  $('body').append(
     '<div class="alert alert-dismissable alert-danger">'+
     '<button type="button" class="close" data-dismiss="alert">'+
     '×'+
