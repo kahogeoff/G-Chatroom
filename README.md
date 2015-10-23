@@ -58,6 +58,7 @@ You can set Message TTL by creating a [TTL index](http://docs.mongodb.org/manual
 1. <del> ID system is not working when you run this on hosting service (e.g. CleverCloud) </del> Fixed
 
 ### Planning Feature
+0. Improve the loading speed
 1. <del>Change the UI to [Material design](http://www.google.com/design/spec/material-design/introduction.html)</del> Done
 2. <del>Move some variable to a config file</del> Done
 3. <del>Move the custom CSS to a CSS file</del> Done
