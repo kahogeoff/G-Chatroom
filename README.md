@@ -6,8 +6,6 @@ A brand new version of this sh*t is under construction.
 
 All features will be recconstruct.
 
-![Old Srceen Shot](http://i.imgur.com/z763Abx.png)
-
 You can see the old demo in [here](https://gchatroom.herokuapp.com)
 
 or the more older demo in [here](http://gchatroom-geoff4321.rhcloud.com/)
