@@ -2,11 +2,13 @@
 
 # G-Chatroom
 
-A brand new version of this sh*t is under construction.
+This was an abandoned repo, source code are still available to use under the license.
 
-All features will be recconstruct.
+<s>A brand new version of this sh*t is under construction.</s>
 
-You can see the old demo in [here](https://gchatroom.herokuapp.com) or the more older demo in [here](http://gchatroom-geoff4321.rhcloud.com/)
+<s>All features will be recconstruct.</s>
+
+<s>You can see the old demo in [here](https://gchatroom.herokuapp.com) or the more older demo in [here](http://gchatroom-geoff4321.rhcloud.com/)</s>
 
 ### Libraries
 
